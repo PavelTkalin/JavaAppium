@@ -15,4 +15,6 @@ public class AndroidMyListsPageObject extends MyListsPageObject {
     public AndroidMyListsPageObject(AppiumDriver driver) {
         super(driver);
     }
+
+    //
 }
