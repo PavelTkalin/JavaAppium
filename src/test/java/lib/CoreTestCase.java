@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import junit.framework.TestCase;
 import lib.ui.WelcomePageObject;
 import org.openqa.selenium.ScreenOrientation;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.time.Duration;
 
@@ -11,7 +12,7 @@ import java.time.Duration;
 public class CoreTestCase extends TestCase {
 
 
-    protected AppiumDriver driver;
+    protected RemoteWebDriver driver;
 
     protected void setUp() throws Exception {
 
@@ -19,6 +20,8 @@ public class CoreTestCase extends TestCase {
         driver = Platform.getInstance().getDriver();
         this.rotateScreenPortrait();
         this.skipWelcomePageForIOSApp();
+        this.openWikiWebPageForMobileWeb();
+
 
     }
 
@@ -31,25 +34,53 @@ public class CoreTestCase extends TestCase {
 
 
     protected void rotateScreenPortrait() {
-        driver.rotate(ScreenOrientation.PORTRAIT);
+
+        if (driver instanceof AppiumDriver) {
+
+            AppiumDriver driver = (AppiumDriver) this.driver;
+            driver.rotate(ScreenOrientation.PORTRAIT);
+        } else {
+            System.out.println("This method does nothing for Platform" + Platform.getInstance().getPlatformVar());
+        }
 
     }
 
     protected void rotateScreenLandscape() {
-        driver.rotate(ScreenOrientation.LANDSCAPE);
 
+        if (driver instanceof AppiumDriver) {
+
+            AppiumDriver driver = (AppiumDriver) this.driver;
+            driver.rotate(ScreenOrientation.LANDSCAPE);
+        } else {
+            System.out.println("This method does nothing for Platform" + Platform.getInstance().getPlatformVar());
+
+        }
     }
 
+    protected void openWikiWebPageForMobileWeb() {
+
+        if (Platform.getInstance().isiOS()) {
+            driver.get("https://en.m.Wikipedia.org");
+        } else  {
+            System.out.println("This method does nothing for Platform" + Platform.getInstance().getPlatformVar());
+        }
+    }
 
 
     private void skipWelcomePageForIOSApp() {
         if (Platform.getInstance().isiOS()) {
 
+            AppiumDriver driver = (AppiumDriver) this.driver;
             WelcomePageObject WelcomePageObject = new WelcomePageObject(driver);
             WelcomePageObject.clickSkip();
 
 
+        } else {
+            System.out.println("Method rotateScreenPortrait() does nothing for Platform" + Platform.getInstance().getPlatformVar());
         }
+
+
     }
+
 
 }
