@@ -21,7 +21,7 @@ public class AuthorizationPageObject extends MainPageObject {
     }
 
     public void enterLoginData(String login, String password) {
-        this.waitForElementAndSendKeys(LOGIN_INPUT, login, "Cannot find and put a login to login input", 5);
+        this.waitForElementAndSendKeys(LOGIN_INPUT, login, "Cannot  find and put a login to login input", 5);
         this.waitForElementAndSendKeys(PASSWORD_INPUT, login, "Cannot find and put a password to password input", 5);
 
     }
