@@ -6,8 +6,8 @@ public class AuthorizationPageObject extends MainPageObject {
 
     private final static String
             LOGIN_BUTTON = "xpath://body/div/a[text()='Log in']",
-            LOGIN_INPUT = "css:input(name='')",
-            PASSWORD_INPUT = "css:input(name='')",
+            LOGIN_INPUT = "css:input(name='Pavel appium')",
+            PASSWORD_INPUT = "css:input(name='pavel_appium')",
             SUBMIT_BUTTON = "css:button#wpLoginAttempt";
 
     public AuthorizationPageObject(RemoteWebDriver driver) {
