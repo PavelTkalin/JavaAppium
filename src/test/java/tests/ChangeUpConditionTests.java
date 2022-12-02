@@ -1,10 +1,11 @@
 package tests;
 
 import lib.CoreTestCase;
+import lib.Platform;
 import lib.ui.ArticlePageObject;
 import lib.ui.SearchPageObject;
 import lib.ui.factories.ArticlePageObjectFactory;
-import lib.ui.factories.searchPageObjectFactory;
+import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 
 public class ChangeUpConditionTests extends CoreTestCase {
@@ -14,7 +15,13 @@ public class ChangeUpConditionTests extends CoreTestCase {
     public void testChangeScreenOrientationOnSearchResults() {
 
 
-        SearchPageObject SearchPageObject = searchPageObjectFactory.get(driver);
+        if (Platform.getInstance().isMw()) {
+
+            return;
+        }
+
+
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("JavaScript");
@@ -45,14 +52,18 @@ public class ChangeUpConditionTests extends CoreTestCase {
 
     public void testSearchArticleBackground() {
 
+        if (Platform.getInstance().isMw()) {
 
-        SearchPageObject SearchPageObject = searchPageObjectFactory.get(driver);
+            return;
+        }
+
+
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("JavaScript");
         SearchPageObject.clickByArticle();
 
-        this.backgroundApp(2);
     }
 
 }

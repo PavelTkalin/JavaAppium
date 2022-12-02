@@ -1,8 +1,7 @@
 package lib.ui;
 
-import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.WebElement;
 import lib.Platform;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 abstract public class ArticlePageObject extends MainPageObject {
@@ -13,6 +12,7 @@ abstract public class ArticlePageObject extends MainPageObject {
             FOOTER_ELEMENT,
             OPTIONS_BUTTON,
             OPTIONS_ADD_TO_MY_LIST_BUTTON,
+            OPTIONS_REMOVE_FROM_MY_LIST_BUTTON,
             ADD_TO_MY_LIST_OVERLAY,
             ADD_TO_MY_EXISTING_LIST_OVERLAY,
             MY_LIST_NAME_INPUT,
@@ -81,15 +81,39 @@ abstract public class ArticlePageObject extends MainPageObject {
     }
 
 
-    public void closeArticle() {
-
-        this.waitForElementAndClick(CLOSE_ARTICLE_BUTTON, "Cannot close article", 5);
-
-    }
-
-
     public void addArticlesToMySaved() {
 
+        if (Platform.instance.isMw()) {
+            this.removeArticleFromMySavedIfAdded();
+        }
         this.waitForElementAndClick(OPTIONS_ADD_TO_MY_LIST_BUTTON, "cannot find options to add article to reading list", 5);
+
     }
+
+
+    public void removeArticleFromMySavedIfAdded() {
+
+
+        if (this.isElementPresent(OPTIONS_REMOVE_FROM_MY_LIST_BUTTON)) {
+            this.waitForElementAndClick(OPTIONS_REMOVE_FROM_MY_LIST_BUTTON, "Cannot click button to remove article from lists", 15);
+            this.waitForElementPresent(OPTIONS_ADD_TO_MY_LIST_BUTTON, "Cannot find a button to save article after removing", 15);
+        }
+
+
+    }
+
+
+    public void closeArticle() {
+
+        if ((Platform.getInstance().isiOS()) || (Platform.getInstance().isAndroid())) {
+
+            this.waitForElementAndClick(CLOSE_ARTICLE_BUTTON, "Cannot close article", 5);
+
+        } else {
+            System.out.println("This method do nothing for platform" + Platform.getInstance().getPlatformVar());
+
+        }
+    }
+
+
 }

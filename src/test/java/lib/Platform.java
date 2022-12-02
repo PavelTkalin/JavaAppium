@@ -1,6 +1,5 @@
 package lib;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -41,9 +40,7 @@ public class Platform {
             return new IOSDriver(URL, this.getIOSDesiredCapabilities());
         } else if (this.isMw()) {
             return new ChromeDriver(this.getMVChromeOptions());
-        }
-
-        else throw new Exception("Cannot detect type of the Driver. Platform value" + this.getPlatformVar());
+        } else throw new Exception("Cannot detect type of the Driver. Platform value" + this.getPlatformVar());
 
 
     }

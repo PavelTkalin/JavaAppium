@@ -1,6 +1,5 @@
 package lib.ui.ios;
 
-import io.appium.java_client.AppiumDriver;
 import lib.ui.MyListsPageObject;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -12,7 +11,7 @@ public class IOSMyListsPageObject extends MyListsPageObject {
 
     }
 
-    public IOSMyListsPageObject (RemoteWebDriver driver) {
+    public IOSMyListsPageObject(RemoteWebDriver driver) {
         super(driver);
     }
 }

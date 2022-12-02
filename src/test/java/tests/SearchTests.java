@@ -4,7 +4,7 @@ import lib.CoreTestCase;
 import lib.ui.ArticlePageObject;
 import lib.ui.SearchPageObject;
 import lib.ui.factories.ArticlePageObjectFactory;
-import lib.ui.factories.searchPageObjectFactory;
+import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 
 public class SearchTests extends CoreTestCase {
@@ -15,7 +15,7 @@ public class SearchTests extends CoreTestCase {
 
     public void testCancelTestSearch() {
 
-        SearchPageObject SearchPageObject = searchPageObjectFactory.get(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.waitForCancelButtonToAppear();
@@ -27,7 +27,7 @@ public class SearchTests extends CoreTestCase {
     public void testSearch() {
 
 
-        SearchPageObject SearchPageObject = searchPageObjectFactory.get(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -39,7 +39,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testTestSwipeArticle() {
 
-        SearchPageObject SearchPageObject = searchPageObjectFactory.get(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -56,7 +56,7 @@ public class SearchTests extends CoreTestCase {
 
     public void testAmountOfNotEmptySearch() {
 
-        SearchPageObject SearchPageObject = searchPageObjectFactory.get(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Linkin park discography");
@@ -74,7 +74,7 @@ public class SearchTests extends CoreTestCase {
 
     public void testOfEmptyAmountSearch() {
 
-        SearchPageObject SearchPageObject = searchPageObjectFactory.get(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("fdfd&454d");

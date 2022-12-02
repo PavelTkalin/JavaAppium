@@ -2,27 +2,29 @@ package tests;
 
 import lib.CoreTestCase;
 import lib.Platform;
-import lib.ui.ArticlePageObject;
-import lib.ui.MyListsPageObject;
-import lib.ui.NavigationUI;
-import lib.ui.SearchPageObject;
+import lib.ui.*;
 import lib.ui.factories.ArticlePageObjectFactory;
 import lib.ui.factories.MyListsPageObjectFactory;
 import lib.ui.factories.NavigationUIFactory;
-import lib.ui.factories.searchPageObjectFactory;
+import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class MyListsTests extends CoreTestCase {
 
     private static final String name_of_folder = "Learning programming";
-/*
+    private static final String
+            login = "",
+            password = "";
+
+
+
     @Test
 
     public void testSaveFirstArticleToMyList() {
 
 
-        SearchPageObject SearchPageObject = searchPageObjectFactory.get(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -39,6 +41,21 @@ public class MyListsTests extends CoreTestCase {
 
         }
 
+        if (Platform.getInstance().isMw()) {
+
+            AuthorizationPageObject Auth = new AuthorizationPageObject(driver);
+            Auth.clickAuthButton();
+            Auth.enterLoginData(login, password);
+            Auth.submitForm();
+
+            ArticlePageObject.waitForTitleElement();
+            assertEquals("we are not on the same page after login",
+                    article_title, ArticlePageObject.getArticleTitle());
+
+            ArticlePageObject.addArticlesToMySaved();
+        }
+
+
         ArticlePageObject.addArticleTitleToMyList("Learning programming");
         ArticlePageObject.closeArticle();
 
@@ -52,13 +69,13 @@ public class MyListsTests extends CoreTestCase {
 
     }
 
-*/
+
     @Test
 
     public void testSaveTwoArticlesToMyList() {
 
 
-        SearchPageObject SearchPageObject = searchPageObjectFactory.get(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -96,7 +113,7 @@ public class MyListsTests extends CoreTestCase {
         ArticlePageObject2.closeArticle();
 
         NavigationUI NavigationUI = NavigationUIFactory.get(driver);
-        ;
+        NavigationUI.openNavigation();
         NavigationUI.clickMyLists();
         MyListsPageObject MyListsPageObject = MyListsPageObjectFactory.get(driver);
         MyListsPageObject.openFolderByName("Learning programming");

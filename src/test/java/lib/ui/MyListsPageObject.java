@@ -1,16 +1,16 @@
 package lib.ui;
 
-import io.appium.java_client.AppiumDriver;
 import lib.Platform;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 abstract public class MyListsPageObject extends MainPageObject {
 
-   protected static String
+    protected static String
 
             FOLDER_BY_NAME_TPL,
             ARTICLE_BY_TITLE,
-    LIST_OF_ARTICLES;
+            REMOVED_FROM_SAVED_BUTTON,
+            LIST_OF_ARTICLES;
 
     public MyListsPageObject(RemoteWebDriver driver) {
         super(driver);
@@ -19,6 +19,11 @@ abstract public class MyListsPageObject extends MainPageObject {
 
     public static String getSavedArticleXpathByTitle(String article_title) {
         return ARTICLE_BY_TITLE.replace("{FOLDERNAME}", article_title);
+
+    }
+
+    public static String getRemovedButtonByTitle(String article_title) {
+        return REMOVED_FROM_SAVED_BUTTON.replace("{FOLDERNAME}", article_title);
 
     }
 
@@ -72,11 +77,25 @@ abstract public class MyListsPageObject extends MainPageObject {
         this.waitForArticleTitleToAppearByTitle(article_title);
 
         String article_xpath = getFolderXpathByName(article_title);
-        this.swipeElementToLeft(article_xpath, "Cannot swipe");
 
-        if(Platform.getInstance().isiOS()) {
+        if ((Platform.getInstance().isiOS()) || (Platform.getInstance().isAndroid())) {
 
-this.clickElementToTheRightUpCorner(article_xpath, "Cannot find saved article");
+            this.swipeElementToLeft(article_xpath, "cannot swipe");
+
+        } else {
+            String remove_locator = getRemovedButtonByTitle(article_title);
+            this.waitForElementAndClick(remove_locator, "cannot click button to remove article from saved", 10);
+        }
+
+        if (Platform.getInstance().isiOS()) {
+
+            this.clickElementToTheRightUpCorner(article_xpath, "cannot find saved article");
+
+        }
+
+        if (Platform.getInstance().isMw()) {
+
+            driver.navigate().refresh();
         }
 
         this.waitForArticleTitleToDissappearByTitle(article_title);

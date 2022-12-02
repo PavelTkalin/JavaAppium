@@ -6,8 +6,6 @@ import lib.ui.WelcomePageObject;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.time.Duration;
-
 
 public class CoreTestCase extends TestCase {
 
@@ -61,7 +59,7 @@ public class CoreTestCase extends TestCase {
 
         if (Platform.getInstance().isiOS()) {
             driver.get("https://en.m.Wikipedia.org");
-        } else  {
+        } else {
             System.out.println("This method does nothing for Platform" + Platform.getInstance().getPlatformVar());
         }
     }
