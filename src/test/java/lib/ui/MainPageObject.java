@@ -2,6 +2,8 @@ package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
 import lib.Platform;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -139,16 +141,16 @@ public class MainPageObject {
 
             TouchAction action = new TouchAction((AppiumDriver) driver);
 
-            action.press(right_x, middle_y);
-            action.waitAction(300);
+            action.press(PointOption.point(right_x,middle_y));
+            action.waitAction(WaitOptions.waitOptions(300));
 
 
             if (Platform.getInstance().isAndroid()) {
-                action.moveTo(left_x, middle_y);
+                action.moveTo(PointOption.point(left_x, middle_y));
             } else {
 
                 int offset_x = (-1 * element.getSize().getWidth());
-                action.moveTo(offset_x, 0);
+                action.moveTo(PointOption.point(offset_x, 0));
             }
             action.release();
             action.perform();
@@ -189,7 +191,7 @@ public class MainPageObject {
     public void scrollTillElementNotVisible(String locator, String error_message, int max_swipes) {
 
         int already_swiped = 0;
-        WebElement element = this.waitForElementPresent(locator, error_message);
+        WebElement element = this.waitForElementPresent(locator, error_message,15);
 
         while (!this.isElementLocatedOnTheScreen(locator)) {
 
@@ -290,12 +292,8 @@ public class MainPageObject {
             int start_y = (int) (size.height * 0.8);
             int end_y = (int) (size.height * 0.2);
 
-            action
-                    .press(x, start_y)
-                    .waitAction(timeOfSwipe)
-                    .moveTo(x, end_y)
-                    .release()
-                    .perform();
+            action.press(x, start_y).waitAction(timeOfSwipe).moveTo(x, end_y).release().perform();
+
         } else {
             System.out.println("This method does nothing for Platform" + Platform.getInstance().getPlatformVar());
         }
