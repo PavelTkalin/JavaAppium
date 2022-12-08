@@ -1,21 +1,31 @@
 package lib;
 
 import io.appium.java_client.AppiumDriver;
-import junit.framework.TestCase;
+import io.qameta.allure.Step;
 import lib.ui.WelcomePageObject;
+import org.junit.After;
+import org.junit.Before;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.io.FileOutputStream;
+import java.util.Properties;
 
-public class CoreTestCase extends TestCase {
+
+public class CoreTestCase {
 
 
     protected RemoteWebDriver driver;
 
-    protected void setUp() throws Exception {
 
-        super.setUp();
+    @Before
+    @Step("Run driver and session")
+
+    public void setUp() throws Exception {
+
+
         driver = Platform.getInstance().getDriver();
+        this.createAllurePropertyFile();
         this.rotateScreenPortrait();
         this.skipWelcomePageForIOSApp();
         this.openWikiWebPageForMobileWeb();
@@ -23,14 +33,16 @@ public class CoreTestCase extends TestCase {
 
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    @Step("Remove driver and session")
+    public void tearDown() throws Exception {
 
         driver.quit();
-        super.tearDown();
+
     }
 
 
+    @Step("Rotate screen to portrait mode")
     protected void rotateScreenPortrait() {
 
         if (driver instanceof AppiumDriver) {
@@ -43,6 +55,7 @@ public class CoreTestCase extends TestCase {
 
     }
 
+    @Step("Rotate screen to landscape mode")
     protected void rotateScreenLandscape() {
 
         if (driver instanceof AppiumDriver) {
@@ -55,6 +68,7 @@ public class CoreTestCase extends TestCase {
         }
     }
 
+    @Step("this method doesn't work for Android and iOS")
     protected void openWikiWebPageForMobileWeb() {
 
         if (Platform.getInstance().isiOS()) {
@@ -65,6 +79,7 @@ public class CoreTestCase extends TestCase {
     }
 
 
+    @Step("Step skip welcome to screen iOS")
     private void skipWelcomePageForIOSApp() {
         if (Platform.getInstance().isiOS()) {
 
@@ -78,6 +93,22 @@ public class CoreTestCase extends TestCase {
         }
 
 
+    }
+
+    @Step("Create allure property file")
+    private void createAllurePropertyFile() {
+
+        String path = System.getProperty("allure.results.directory");
+        try {
+            Properties props = new Properties();
+            FileOutputStream fos = new FileOutputStream(path + "/environment.properties");
+            props.setProperty("Environment", Platform.getInstance().getPlatformVar());
+            props.store(fos, "See https://github.com/allure-framework/allure-app/wiki/Environment");
+            fos.close();
+        } catch (Exception e) {
+            System.err.println("IO problem when writing Allure properties file");
+            e.printStackTrace();
+        }
     }
 
 

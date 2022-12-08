@@ -1,5 +1,6 @@
 package lib.ui;
 
+import io.qameta.allure.Step;
 import lib.Platform;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -22,17 +23,20 @@ abstract public class MyListsPageObject extends MainPageObject {
 
     }
 
+    @Step("Get removed button by title")
     public static String getRemovedButtonByTitle(String article_title) {
         return REMOVED_FROM_SAVED_BUTTON.replace("{FOLDERNAME}", article_title);
 
     }
 
 
+    @Step("get folder xpath by name")
     public static String getFolderXpathByName(String name_of_folder) {
         return FOLDER_BY_NAME_TPL.replace("{FOLDERNAME}", name_of_folder);
 
     }
 
+    @Step("open folder by name")
     public void openFolderByName(String name_of_folder) {
 
         String folder_name_xpath = getFolderXpathByName(name_of_folder);
@@ -41,6 +45,7 @@ abstract public class MyListsPageObject extends MainPageObject {
     }
 
 
+    @Step("open folder")
     public void openFolder() {
 
 
@@ -49,13 +54,14 @@ abstract public class MyListsPageObject extends MainPageObject {
     }
 
 
+    @Step("Wait for article title appear by name")
     public void waitForArticleTitleToAppearByTitle(String article_title) {
 
         String article_xpath = getFolderXpathByName(article_title);
         this.waitForElementPresent(article_xpath, "Cannot find saved article" + article_title, 15);
 
     }
-
+    @Step("Wait for article title disappear by name")
     public void waitForArticleTitleToDissappearByTitle(String article_title) {
 
         String article_xpath = getFolderXpathByName(article_title);
@@ -71,7 +77,7 @@ abstract public class MyListsPageObject extends MainPageObject {
 
     }
 
-
+    @Step("Swipe by article title to delete")
     public void swipeByArticleToDelete(String article_title) {
 
         this.waitForArticleTitleToAppearByTitle(article_title);
@@ -103,6 +109,7 @@ abstract public class MyListsPageObject extends MainPageObject {
     }
 
 
+    @Step("Swipe by article to delete without title")
     public void swipeByArticleToDeleteWithoutTitle(String article_title) {
 
         this.waitForArticleTitleToAppearByTitle(article_title);

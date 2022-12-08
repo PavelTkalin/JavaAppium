@@ -1,5 +1,6 @@
 package lib.ui;
 
+import io.qameta.allure.Step;
 import lib.Platform;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -19,21 +20,25 @@ abstract public class ArticlePageObject extends MainPageObject {
             MY_LIST_OK_BUTTON,
             CLOSE_ARTICLE_BUTTON;
 
+
     public ArticlePageObject(RemoteWebDriver driver) {
 
         super(driver);
 
     }
 
+    @Step("Wait for title with name '{TITLE}'")
     public WebElement waitForTitleElement() {
 
         return this.waitForElementPresent(TITLE, "Cannot find article title on page", 15);
 
     }
 
+    @Step("Get article title")
     public String getArticleTitle() {
 
         WebElement title_element = waitForTitleElement();
+        screenshot(this.takeScreenshot("Get article title"));
         if (Platform.getInstance().isAndroid()) {
 
             return title_element.getText();
@@ -43,6 +48,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         }
     }
 
+    @Step("Swipe to footer")
     public void swipeToFooter() {
 
         if (Platform.getInstance().isAndroid()) {
@@ -58,6 +64,7 @@ abstract public class ArticlePageObject extends MainPageObject {
         }
     }
 
+    @Step("Add article to my list")
     public void addArticleTitleToMyList(String name_of_folder) {
 
         this.waitForElementAndClick(OPTIONS_BUTTON, "cannot open", 5);
@@ -70,6 +77,7 @@ abstract public class ArticlePageObject extends MainPageObject {
     }
 
 
+    @Step("Add article to existing list")
     public void addArticleTitleToMyExistingList() {
 
         this.waitForElementAndClick(OPTIONS_BUTTON, "cannot open", 5);
@@ -80,7 +88,7 @@ abstract public class ArticlePageObject extends MainPageObject {
 
     }
 
-
+    @Step("Add articles to my saved")
     public void addArticlesToMySaved() {
 
         if (Platform.instance.isMw()) {
@@ -91,6 +99,7 @@ abstract public class ArticlePageObject extends MainPageObject {
     }
 
 
+    @Step("Remove article from my saved")
     public void removeArticleFromMySavedIfAdded() {
 
 
@@ -102,6 +111,7 @@ abstract public class ArticlePageObject extends MainPageObject {
 
     }
 
+    @Step("Close article")
 
     public void closeArticle() {
 
